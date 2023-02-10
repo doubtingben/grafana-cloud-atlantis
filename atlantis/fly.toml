@@ -1,0 +1,19 @@
+# fly.toml file generated for spring-breeze-567 on 2023-02-09T19:26:41-05:00
+
+app = "spring-breeze-567"
+
+[env]
+  LOG_LEVEL = "debug"
+  RAILS_ENV = "production"
+  S3_BUCKET = "my-app-production"
+
+[[services]]
+  internal_port = 4141
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+    [services.ports.tls_options]
+      alpn = ["h2", "http/1.1"]
+      versions = ["TLSv1.2", "TLSv1.3"]

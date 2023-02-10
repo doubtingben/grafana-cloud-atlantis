@@ -1,0 +1,5 @@
+
+ATLANTIS_GH_TOKEN 
+ATLANTIS_GH_USER
+ATLANTIS_REPO_ALLOWLIST='github.com/doubtingben/grafana-cloud-atlantis'
+ATLANTIS_GH_WEBHOOK_SECRET=
