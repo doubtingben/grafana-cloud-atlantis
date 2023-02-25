@@ -33,7 +33,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: atlantis-auth
-                  key: atlantis-webhook-secret
+                  key: ATLANTIS_GH_WEBHOOK_SECRET
           livenessProbe:
             httpGet:
               path: /healthz
@@ -54,7 +54,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: atlantis
+  name: atlantis-server
 spec:
   selector:
     app: atlantis
