@@ -4,7 +4,16 @@ terraform {
       source  = "integrations/github"
       version = "~> 5.0"
     }
+    
   }
+  backend "gcs" {
+    bucket  = "grafana-cloud-terraform"
+  }
+}
+
+provider "google" {
+  project     = "ceramic-hds-testing"
+  region      = "us-central1"
 }
 
 provider "github" {
