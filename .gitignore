@@ -1,0 +1,4 @@
+.env
+.terraform
+*.plan
+terraform.tfstate

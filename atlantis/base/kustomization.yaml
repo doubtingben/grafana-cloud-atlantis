@@ -1,0 +1,11 @@
+---
+namespace: atlantis
+resources:
+  - ./atlantis.yaml
+  #- ./tailscale.yaml
+  - ./cloudflared.yaml
+
+configMapGenerator:
+  - name: atlantis-env
+    envs:
+      - atlantis.env
