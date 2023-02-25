@@ -28,6 +28,12 @@ spec:
                 name: atlantis-auth
             - configMapRef:
                 name: atlantis-env
+          env:
+            - name: TF_VAR_atlantis_webhook_secret
+              valueFrom:
+                secretKeyRef:
+                  name: atlantis-auth
+                  key: atlantis-webhook-secret
           livenessProbe:
             httpGet:
               path: /healthz
