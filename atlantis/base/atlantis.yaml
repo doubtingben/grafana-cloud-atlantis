@@ -34,6 +34,11 @@ spec:
                 secretKeyRef:
                   name: atlantis-auth
                   key: ATLANTIS_GH_WEBHOOK_SECRET
+            - name: GOOGLE_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  name: atlantis-backend-bucket-auth
+                  key: sa.json
           livenessProbe:
             httpGet:
               path: /healthz

@@ -23,3 +23,11 @@ kubectl delete secret generic atlantis-cloudflared-token \
 kubectl create secret generic atlantis-cloudflared-token \
   --namespace=atlantis \
   --from-literal=token=$ATLANTIS_CLOUDFLARED_TOKEN
+
+
+# gcloud iam service-accounts keys create \
+# --iam-account backend@ceramic-hds-testing.iam.gserviceaccount.com \
+# ./backend@ceramic-hds-testing.iam.gserviceaccount.com.json
+kubectl create secret generic atlantis-backend-bucket-auth \
+  --namespace=atlantis \
+  --from-file=sa.json=sa-local.json
