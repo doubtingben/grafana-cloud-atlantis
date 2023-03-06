@@ -1,0 +1,74 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: atlantis
+  namespace: atlantis
+  labels:
+    app: atlantis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: atlantis
+  template:
+    metadata:
+      labels:
+        app: atlantis
+    spec:
+      containers:
+        - name: atlantis
+          image: ghcr.io/runatlantis/atlantis
+          # command:
+          #   - /bin/sh
+          #   - -c
+          #   - "sleep infinity"
+          envFrom:
+            - secretRef:
+                name: atlantis-auth
+            - configMapRef:
+                name: atlantis-env
+          env:
+            - name: TF_VAR_atlantis_webhook_secret
+              valueFrom:
+                secretKeyRef:
+                  name: atlantis-auth
+                  key: ATLANTIS_GH_WEBHOOK_SECRET
+            - name: GOOGLE_CREDENTIALS
+              value: /atlantis-terraform-sa/sa.json
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 4141
+          ports:
+            - containerPort: 4141
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 512Mi
+              ephemeral-storage: 1Gi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+              ephemeral-storage: 1Gi
+          volumeMounts:
+            - name: atlantis-terraform-sa
+              mountPath: /atlantis-terraform-sa
+
+      volumes:
+        - name: atlantis-terraform-sa
+          secret:
+            secretName: atlantis-terraform-sa
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: atlantis-server
+spec:
+  selector:
+    app: atlantis
+  ports:
+    - protocol: TCP
+      port: 4141
+      targetPort: 4141

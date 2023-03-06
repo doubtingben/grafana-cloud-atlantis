@@ -3,9 +3,7 @@
 app = "spring-breeze-567"
 
 [env]
-  LOG_LEVEL = "debug"
-  RAILS_ENV = "production"
-  S3_BUCKET = "my-app-production"
+  ATLANTIS_LOG_LEVEL = "info"
 
 [[services]]
   internal_port = 4141
@@ -14,6 +12,13 @@ app = "spring-breeze-567"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = "443"
-    [services.ports.tls_options]
-      alpn = ["h2", "http/1.1"]
-      versions = ["TLSv1.2", "TLSv1.3"]
+
+  [[services.http_checks]]
+    interval = 10000
+    grace_period = "5s"
+    method = "get"
+    path = "/healthz"
+    protocol = "http"
+    restart_limit = 0
+    timeout = 2000
+    tls_skip_verify = false
