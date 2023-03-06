@@ -35,7 +35,7 @@ spec:
                   name: atlantis-auth
                   key: ATLANTIS_GH_WEBHOOK_SECRET
             - name: GOOGLE_CREDENTIALS
-              value: /atlantis-backend-bucket-auth/sa.json
+              value: /atlantis-terraform-sa/sa.json
           livenessProbe:
             httpGet:
               path: /healthz
@@ -53,13 +53,13 @@ spec:
               memory: 512Mi
               ephemeral-storage: 1Gi
           volumeMounts:
-            - name: atlantis-backend-bucket-auth
-              mountPath: /atlantis-backend-bucket-auth
+            - name: atlantis-terraform-sa
+              mountPath: /atlantis-terraform-sa
 
       volumes:
-        - name: atlantis-backend-bucket-auth
+        - name: atlantis-terraform-sa
           secret:
-            secretName: atlantis-backend-bucket-auth
+            secretName: atlantis-terraform-sa
 ---
 kind: Service
 apiVersion: v1
